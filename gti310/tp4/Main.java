@@ -98,7 +98,7 @@ public class Main {
 	
 		System.out.println(EightXEightBlocksContainer[2][1][1].getEightXEightBlockMatrix()[6][6]);
 				
-			
+		
 		
 	}
 	

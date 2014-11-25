@@ -12,48 +12,28 @@ public class EightXEightBlocksMethods {
 		EightXEightBlock[][][] eightXEightBlocksContainer = new EightXEightBlock[3]
 				[eightXEightBlocksContainerLength][eightXEightBlocksContainerLength];
 		
-		int u = 0;
-		int v = 0;
-		
-		for(int i = 0; i < 3; i++) {
-			for(int j = 0; j < imageValues[0].length; j+=8) {
-				
-				for(int k = 0; k < imageValues[0].length; k+=8) {
+		for(int i = 0; i < 3; i++) 
+			for(int j = 0; j < imageValues[0].length; j+=8) 
+				for(int k = 0; k < imageValues[0].length; k+=8) 
+					for(int u = 0; u < eightXEightBlocksContainerLength; u++)
+						for(int v = 0; v < eightXEightBlocksContainerLength; v++){
+							for(int x = 0; x < 8; x++)
+								for(int y = 0; y < 8; y++)
+									eightXEightBlockMatrix[x][y] = imageValues[i][j+x][k+y]; 
+									
+							EightXEightBlock eightXEightBlock = new EightXEightBlock(eightXEightBlockMatrix);
+							
+							eightXEightBlocksContainer[i][u][v] = eightXEightBlock;
 					
-					for(int x = 0; x < 8; x++)
-						for(int y = 0; y < 8; y++){
-							
-							eightXEightBlockMatrix[x][y] = imageValues[i][j+x][k+y]; 
-							
 						}
-					
-					EightXEightBlock eightXEightBlock = new EightXEightBlock(eightXEightBlockMatrix);
-					
-					if(v > 1){
 						
-						v = 0;
-						
-					}
-					
-					if(u > 1){
-						
-						u = 0;
-						
-					}
-					
-					eightXEightBlocksContainer[i][u][v] = eightXEightBlock;
-					
-					v++;
-				}
-			
-				u++;
-			}
-		}
-		
-		
 		return eightXEightBlocksContainer;
 	}
 	
-	
+	public static int[][][] eightXEightBlocksToImage(EightXEightBlock[][][] eightXEightBlocksContainer){
+		
+		return null;
+		
+	}
 
 }
