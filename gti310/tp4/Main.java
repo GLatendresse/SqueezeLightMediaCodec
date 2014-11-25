@@ -93,10 +93,10 @@ public class Main {
 		      { 1, 88, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 110, 2 }, 
 		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,} } }; 
 		
-		EightXEightBlock[][][] EightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageTest);
-		
+		EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageTest);
+		int[][][] image = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
 	
-		System.out.println(EightXEightBlocksContainer[2][1][1].getEightXEightBlockMatrix()[6][6]);
+		System.out.println(eightXEightBlocksContainer[2][1][1].getEightXEightBlockMatrix()[6][6]);
 				
 		
 		
