@@ -15,7 +15,7 @@ public class EightXEightBlocksMethods {
 		int u = 0;
 		int v = 0;
 		
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < imageValues[0].length; j+=8) {
 				
 				for(int k = 0; k < imageValues[0].length; k+=8) {
@@ -23,12 +23,23 @@ public class EightXEightBlocksMethods {
 					for(int x = 0; x < 8; x++)
 						for(int y = 0; y < 8; y++){
 							
-							eightXEightBlockMatrix[x][y] = imageValues[i][j+x][j+y]; 
+							eightXEightBlockMatrix[x][y] = imageValues[i][j+x][k+y]; 
 							
 						}
 					
 					EightXEightBlock eightXEightBlock = new EightXEightBlock(eightXEightBlockMatrix);
 					
+					if(v > 1){
+						
+						v = 0;
+						
+					}
+					
+					if(u > 1){
+						
+						u = 0;
+						
+					}
 					
 					eightXEightBlocksContainer[i][u][v] = eightXEightBlock;
 					
@@ -39,8 +50,10 @@ public class EightXEightBlocksMethods {
 			}
 		}
 		
-		return eightXEightBlocksContainer;
 		
+		return eightXEightBlocksContainer;
 	}
+	
+	
 
 }

@@ -96,7 +96,7 @@ public class Main {
 		EightXEightBlock[][][] EightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageTest);
 		
 	
-		System.out.println(EightXEightBlocksContainer[2][0][0].getEightXEightBlockMatrix()[0][0]);
+		System.out.println(EightXEightBlocksContainer[2][1][1].getEightXEightBlockMatrix()[6][6]);
 				
 			
 		
