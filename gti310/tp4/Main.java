@@ -93,6 +93,10 @@ public class Main {
 		      { 1, 88, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 110, 2 }, 
 		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,} } }; 
 		
+		//Image convert (RGB to YCbCr)
+		Convert conv = new Convert();
+		imageTest = conv.extractImage(imageTest);
+		
 		EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageTest);
 		int[][][] image = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
 	
