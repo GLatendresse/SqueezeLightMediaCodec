@@ -95,7 +95,7 @@ public class Main {
 		
 		//Image convert (RGB to YCbCr)
 		//imageTest = Convert.extractImage(PPMReaderWriter.readPPMFile(filename));
-		imageTest = Convert.extractImage(imageTest);
+		imageTest = Convert.extractImageRGB(imageTest);
 		
 		EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageTest);
 		int[][][] image = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
