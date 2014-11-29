@@ -31,17 +31,17 @@ public class Quantization {
 	
 	
 	
-	public static int[][] QuantizationOperation(int[][] rawEightXEightBloc, int quantizationType, int qualityValue){
+	public static int[][] quantizationOperation(int[][] rawEightXEightBloc, int quantizationType, int qualityValue){
 		
 		int[][] quantifiedEightXEightBloc = new int[8][8];
-		int[][] quantizationnMatrix = new int[8][8];
+		int[][] quantizationMatrix = new int[8][8];
 		double alpha = 1;
 		
 		if(quantizationType == LUMINANCEQUANTIZATION)
-			quantizationnMatrix = QY;
+			quantizationMatrix = QY;
 		
 		else
-			quantizationnMatrix = QU;
+			quantizationMatrix = QU;
 		
 		if(qualityValue < MINQUALITYVALUE)
 			qualityValue = MINQUALITYVALUE;
@@ -61,7 +61,7 @@ public class Quantization {
 			for(int u = 0; u < rawEightXEightBloc.length; u++)
 				for(int v = 0; v < rawEightXEightBloc.length; v++){
 					
-					quantifiedEightXEightBloc[u][v] = (int) (rawEightXEightBloc[u][v]/(alpha*quantizationnMatrix[u][v]));
+					quantifiedEightXEightBloc[u][v] = (int) (rawEightXEightBloc[u][v]/(alpha*quantizationMatrix[u][v]));
 					
 			}
 				
@@ -70,6 +70,48 @@ public class Quantization {
 		
 		
 		return quantifiedEightXEightBloc;
+		
+	}
+	
+	public static int[][] deQuantizationOperation(int[][] quantifiedEightXEightBloc, int quantizationType, int qualityValue){
+		
+		int[][] dequantifiedEightXEightBloc = new int[8][8];
+		int[][] quantizationMatrix = new int[8][8];
+		double alpha = 1;
+		
+		if(quantizationType == LUMINANCEQUANTIZATION)
+			quantizationMatrix = QY;
+		
+		else
+			quantizationMatrix = QU;
+		
+		if(qualityValue < MINQUALITYVALUE)
+			qualityValue = MINQUALITYVALUE;
+			
+		
+		if(qualityValue >= MAXQUALITYVALUE)
+			dequantifiedEightXEightBloc = quantifiedEightXEightBloc;
+		
+		else{
+			
+			if(qualityValue >= MINQUALITYVALUE && qualityValue <= MIDQUALITYVALUE )
+				alpha = 50D/(double)qualityValue;
+			
+			else
+				alpha = (200D-2D*(double)qualityValue)/100D;
+			
+			for(int u = 0; u < quantifiedEightXEightBloc.length; u++)
+				for(int v = 0; v < quantifiedEightXEightBloc.length; v++){
+					
+					dequantifiedEightXEightBloc[u][v] = (int) (quantifiedEightXEightBloc[u][v]*alpha*quantizationMatrix[u][v]);
+					
+			}
+				
+			
+		}
+		
+		
+		return dequantifiedEightXEightBloc;
 		
 	}
 	
