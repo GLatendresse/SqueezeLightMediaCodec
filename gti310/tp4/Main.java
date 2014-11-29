@@ -99,8 +99,9 @@ public class Main {
 		
 		EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageTest);
 		
+		Quantization.QuantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[1][0][0].getEightXEightBlockMatrix()), Quantization.CHROMINANCEQUANTIZATION, 20);
 		
-		DCT.inverseDCTOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()));
+		//DCT.inverseDCTOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()));
 		//int[][][] image = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
 	
 		System.out.println(eightXEightBlocksContainer[2][1][1].getEightXEightBlockMatrix()[6][6]);
