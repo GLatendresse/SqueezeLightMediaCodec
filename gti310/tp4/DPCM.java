@@ -38,9 +38,7 @@ public class DPCM {
 					precedentDCValue = encodedDCCoefficients[u] + precedentDCValue;
 					u++;
 				}
-		
-		int breakpoint = 0;
-		breakpoint = 2;
+	
 	}
 
 }
