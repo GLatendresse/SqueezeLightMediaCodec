@@ -16,5 +16,11 @@ public class EightXEightBlock {
 		
 	}
 	
+	public void setValue(int value, int i, int j){
+		
+		this.eightXEightBlockMatrix[i][j] = value; 
+		
+	}
+	
 	
 }

@@ -22,7 +22,7 @@ public class Convert {
 	
 	private static int[] RGBToYCbCr(int r, int g, int b){
 		int[] ycbcr= new int[3];
-		int y  = (int)((( 0.299   * r) + (0.587 * g) + (0.114 * b))+128);
+		int y  = (int)((( 0.299   * r) + (0.587 * g) + (0.114 * b)));
 		int cb = (int)(((-0.16874 * r) - (0.33126 * g) + (0.50000 * b))+128);
 		int cr = (int)(((0.50000 * r) - (0.41869 * g) - (0.08131 * b))+128);
 		ycbcr[0] = y;

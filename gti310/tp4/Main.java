@@ -102,9 +102,10 @@ public class Main {
 		
 		
 		
-		//int[][] test8x8 = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[1][0][0].getEightXEightBlockMatrix()), Quantization.CHROMINANCEQUANTIZATION, 80);
-		//test8x8 = Zigzag.zigzagOperation(test8x8);
-		DPCM.dPCMOperation(eightXEightBlocksContainer);
+		int[][] test8x8 = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()), Quantization.LUMINANCEQUANTIZATION, 80);
+		test8x8 = Zigzag.zigzagOperation(test8x8);
+		
+		DPCM.iDPCMOperation(DPCM.dPCMOperation(eightXEightBlocksContainer), eightXEightBlocksContainer);
 		//DCT.inverseDCTOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()));
 		//int[][][] image = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
 	
