@@ -105,11 +105,41 @@ public class Main {
 		int[][] test8x8 = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()), Quantization.LUMINANCEQUANTIZATION, 80);
 		test8x8 = Zigzag.zigzagOperation(test8x8);
 		
-		DPCM.iDPCMOperation(DPCM.dPCMOperation(eightXEightBlocksContainer), eightXEightBlocksContainer);
+		//test
+		for (int i=0;i<test8x8.length;i++){
+			for (int j=0;j<test8x8[i].length;j++){
+				System.out.println(test8x8[i][j]);
+			}
+		}
+		System.out.println("-----------------------");
+		for (int i=0; i<3;i++){
+			for (int j =0;j<eightXEightBlocksContainer[0].length;j++){
+				for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
+					test8x8 = Zigzag.unzigzagOperation(test8x8);
+					int[][] test2 = DCT.inverseDCTOperation(Quantization.deQuantizationOperation(test8x8, i, 80));
+					EightXEightBlock eightXEightBlockResult = new EightXEightBlock(test2);
+					eightXEightBlocksContainer[i][j][k] = eightXEightBlockResult;
+					System.out.println(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()[i][j]);
+				}
+			}
+		}
+		EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
+		int[][][] imageTestResult = new int[3][][];
+		imageTestResult = Convert.extractImageYCbCr(imageTestResult);
+		System.out.println("-----------------------");
+		for (int i=0;i<imageTestResult[i].length;i++){
+			for (int j=0;j<imageTestResult[i][j].length;j++){
+				System.out.println(imageTestResult[0][i][j]);
+				System.out.println(imageTestResult[1][i][j]);
+				System.out.println(imageTestResult[2][i][j]);
+			}
+		}
+		
+		
+		//DPCM.iDPCMOperation(DPCM.dPCMOperation(eightXEightBlocksContainer), eightXEightBlocksContainer);
 		//DCT.inverseDCTOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()));
 		//int[][][] image = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
-	
-		System.out.println(eightXEightBlocksContainer[2][1][1].getEightXEightBlockMatrix()[6][6]);
+		//System.out.println(eightXEightBlocksContainer[2][1][1].getEightXEightBlockMatrix()[6][6]);
 				
 		
 		
