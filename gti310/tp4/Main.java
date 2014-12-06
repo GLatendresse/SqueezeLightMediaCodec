@@ -42,7 +42,7 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Squeeze Light Media Codec !");
 		
-		int[][][] imageTest = { { 
+		int[][][] imageRGB = { { 
 			  { 234, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
 			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
 			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
@@ -96,9 +96,10 @@ public class Main {
 		
 		//Image convert (RGB to YCbCr)
 		//imageTest = Convert.extractImage(PPMReaderWriter.readPPMFile(filename));
-		imageTest = Convert.extractImageRGB(imageTest);
+		int qualityFactor = 80;
+		int[][][] imageYCbCr = Convert.extractImageRGB(imageRGB);
 		
-		EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageTest);
+		EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageYCbCr);
 		
 		
 		
@@ -110,25 +111,25 @@ public class Main {
 		for (int i=0; i<3;i++){
 			for (int j =0;j<eightXEightBlocksContainer[0].length;j++){
 				for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
-					int[][] test8x8 = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()), Quantization.LUMINANCEQUANTIZATION, 80);
-					test8x8 = Zigzag.zigzagOperation(test8x8);
-					test8x8 = Zigzag.unzigzagOperation(test8x8);
-					int[][] test2 = DCT.inverseDCTOperation(Quantization.deQuantizationOperation(test8x8, i, 80));
-					EightXEightBlock eightXEightBlockResult = new EightXEightBlock(test2);
+					int[][] quantifiedEightxEightBlock = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()), i, qualityFactor);
+					int[][] zigzagedEightxEightBlock = Zigzag.zigzagOperation(quantifiedEightxEightBlock);
+					int[][] unzigzagedEightxEightBlock = Zigzag.unzigzagOperation(zigzagedEightxEightBlock);
+					int[][] unquantifiedEightxEightBlock = DCT.inverseDCTOperation(Quantization.deQuantizationOperation(unzigzagedEightxEightBlock, i, qualityFactor));
+					EightXEightBlock eightXEightBlockResult = new EightXEightBlock(unquantifiedEightxEightBlock);
 					eightXEightBlocksContainer[i][j][k] = eightXEightBlockResult;
-					System.out.println(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()[i][j]);
+					System.out.println(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()[j][k]);
 				}
 			}
 		}
-		EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
-		int[][][] imageTestResult = new int[3][16][16];
-		imageTestResult = Convert.extractImageYCbCr(imageTestResult);
+		
+		int[][][] newImageYCbCr = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
+		int[][][] newImageRGB = Convert.extractImageYCbCr(newImageYCbCr);
 		System.out.println("-----------------------");
-		for (int i=0;i<imageTestResult.length;i++){
-			for (int j=0;j<imageTestResult[i].length;j++){
-				System.out.println(imageTestResult[0][i][j]);
-				System.out.println(imageTestResult[1][i][j]);
-				System.out.println(imageTestResult[2][i][j]);
+		for (int i=0;i<newImageRGB[0].length;i++){
+			for (int j=0;j<newImageRGB[0].length;j++){
+				System.out.println(newImageRGB[0][i][j]);
+				System.out.println(newImageRGB[1][i][j]);
+				System.out.println(newImageRGB[2][i][j]);
 			}
 		}
 		

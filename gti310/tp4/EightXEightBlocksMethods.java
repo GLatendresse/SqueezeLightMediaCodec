@@ -33,16 +33,16 @@ public class EightXEightBlocksMethods {
 		
 		
 		int imageValuesLength = eightXEightBlocksContainer[0].length*8;
-		int[][][] imageValuess = new int[3][imageValuesLength][imageValuesLength];
+		int[][][] imageValues = new int[3][imageValuesLength][imageValuesLength];
 		
 		for(int i = 0; i < 3; i++)
 			for(int j = 0; j < imageValuesLength; j+=8) 
 				for(int k = 0; k < imageValuesLength; k+=8) 
 					for(int x = 0; x < 8; x++)
 						for(int y = 0; y < 8; y++)
-							imageValuess[i][j+x][k+y] = eightXEightBlocksContainer[i][j/8][k/8].getEightXEightBlockMatrix()[x][y];
+							imageValues[i][j+x][k+y] = eightXEightBlocksContainer[i][j/8][k/8].getEightXEightBlockMatrix()[x][y];
 		
-		return imageValuess;
+		return imageValues;
 		
 	}
 
