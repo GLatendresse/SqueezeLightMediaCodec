@@ -1,5 +1,8 @@
 package gti310.tp4;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  * The Main class is where the different functions are called to either encode
  * a PPM file to the Squeeze-Light format or to decode a Squeeze-Ligth image
@@ -94,22 +97,55 @@ public class Main {
 		      { 1, 88, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 110, 2 }, 
 		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,} } }; 
 		
-		//Image convert (RGB to YCbCr) + read file
-		imageRGB = Convert.extractImageRGB(PPMReaderWriter.readPPMFile(args[1]));
-		int qualityFactor = Integer.parseInt(args[0]);
 		
-		int[][][] imageYCbCr = Convert.extractImageRGB(imageRGB);
+		//PPM or SLZ or extension not supported? 
+		String extension = "";
+		String fileName = args[0];
+		int index = fileName.lastIndexOf('.');
+		if (index > 0) {
+		    extension = fileName.substring(index+1);
+		}
 		
-		EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageYCbCr);
-		
-		
-		
+		//PPM
+		if (extension.equals("ppm")){
+			//Ask the user for the quality factor and compressed filename
+			JFrame frameQuality = new JFrame();
+			int qualityFactor = Integer.parseInt(JOptionPane.showInputDialog(frameQuality, "Enter the quality factor:"));
+			JFrame frameFileName = new JFrame();
+			String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the SLZ filename:");
+			//Image convert (RGB to YCbCr) + read file
+			imageRGB = Convert.extractImageRGB(PPMReaderWriter.readPPMFile(fileName));
+			
+			//??
+			int[][][] imageYCbCr = Convert.extractImageRGB(imageRGB);
+			
+			EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageYCbCr);
+			
+			//Save compressed file
+			//writeSZLFile(savedFileName, (height), (width), qualityFactor);
+			
+		}else{
+			//SLZ
+			if (extension.equals("slz")){
+			//Ask the user for the decompressed filename
+			JFrame frameFileName = new JFrame();
+			String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the PPM filename:");
+			//Read compressed file
+			SZLReaderWriter.readSZLFile(fileName);
+			
+			//Save PPM file
+			//writePPMFile(savedFileName, imageYCbCr);
+			
+		}else{
+			JOptionPane.showMessageDialog(null, "Désolé, le format n'est pas supporté.");
+			System.exit(0);
+		}
+	}
+				
 		//int[][] test8x8 = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()), Quantization.LUMINANCEQUANTIZATION, 80);
 		//test8x8 = Zigzag.zigzagOperation(test8x8);
 		
-		//Save compressed file
-		//writeSZLFile(args[2], (height), (width), qualityFactor);
-		
+
 		//test
 		System.out.println("-----------------------");
 		for (int i=0; i<3;i++){
