@@ -113,55 +113,45 @@ public class Main {
 			int qualityFactor = Integer.parseInt(JOptionPane.showInputDialog(frameQuality, "Enter the quality factor:"));
 			JFrame frameFileName = new JFrame();
 			String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the SLZ filename:");
+			
+			
 			//Image convert (RGB to YCbCr) + read file
-			imageRGB = Convert.extractImageRGB(PPMReaderWriter.readPPMFile(fileName));
+			int[][][] imageYCbCr = Convert.extractImageRGB(PPMReaderWriter.readPPMFile(fileName));
+			int height = imageYCbCr[0].length;
 			
-			//??
-			int[][][] imageYCbCr = Convert.extractImageRGB(imageRGB);
-			
+			//Separate the image in 8x8 pixel blocks and stock them into a container EightXEightBlock[color space][i localisation][j localisation]
 			EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageYCbCr);
 			
-			
-			//test print values
-			System.out.println("-----------------------");
-			for (int i=0; i<3;i++){
-				for (int j =0;j<eightXEightBlocksContainer[0].length;j++){
+			//Image pretraitment
+			for (int i=0; i<3;i++)
+				for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
 					for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
 						int[][] quantifiedEightxEightBlock = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()), i, qualityFactor);
 						int[][] zigzagedEightxEightBlock = Zigzag.zigzagOperation(quantifiedEightxEightBlock);
-						int[][] unzigzagedEightxEightBlock = Zigzag.unzigzagOperation(zigzagedEightxEightBlock);
-						int[][] unquantifiedEightxEightBlock = DCT.inverseDCTOperation(Quantization.deQuantizationOperation(unzigzagedEightxEightBlock, i, qualityFactor));
-						EightXEightBlock eightXEightBlockResult = new EightXEightBlock(unquantifiedEightxEightBlock);
+						EightXEightBlock eightXEightBlockResult = new EightXEightBlock(zigzagedEightxEightBlock);
 						eightXEightBlocksContainer[i][j][k] = eightXEightBlockResult;
-						System.out.println(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()[j][k]);
+						
 					}
-				}
-			}
 			
-			int[][][] newImageYCbCr = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
-			int[][][] newImageRGB = Convert.extractImageYCbCr(newImageYCbCr);
-			System.out.println("-----------------------");
-			for (int i=0;i<newImageRGB[0].length;i++){
-				for (int j=0;j<newImageRGB[0].length;j++){
-					System.out.println(newImageRGB[0][i][j]);
-					System.out.println(newImageRGB[1][i][j]);
-					System.out.println(newImageRGB[2][i][j]);
-				}
-			}
-			//fin test print values
+			//DC coefficients writer
+			int[] encodedDCCoefficients = DPCM.dPCMOperation(eightXEightBlocksContainer);
+			for(int i = 0; i < encodedDCCoefficients.length; i++)
+				Entropy.writeDC(encodedDCCoefficients[i]);
 			
-			
-			//DPCM.iDPCMOperation(DPCM.dPCMOperation(eightXEightBlocksContainer), eightXEightBlocksContainer);
-			//DCT.inverseDCTOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()));
-			//int[][][] image = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
-			//System.out.println(eightXEightBlocksContainer[2][1][1].getEightXEightBlockMatrix()[6][6]);
-					
-			
-			
-			
+			//AC coefficients writer
+			for (int i=0; i<3;i++)
+				for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
+					for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
+						
+						int[][] rLCCoefficients = RLC.rLCOperation(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix());
+						for(int u = 0; u < rLCCoefficients.length; u++)
+							Entropy.writeAC(rLCCoefficients[u][RLC.RUNLENGTH], rLCCoefficients[u][RLC.VALUE]);
+						
+					}
 			
 			//Save compressed file
-			//writeSZLFile(savedFileName, (height), (width), qualityFactor);
+			SZLReaderWriter.writeSZLFile(savedFileName, imageYCbCr[0].length, imageYCbCr[0][0].length, qualityFactor);
+			System.out.println("done");
 			
 		}else{
 			//SLZ
@@ -180,5 +170,33 @@ public class Main {
 				System.exit(0);
 			}
 		}
+		
+		//test print values
+		/*System.out.println("-----------------------");
+		for (int i=0; i<3;i++)
+			for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
+				for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
+					int[][] quantifiedEightxEightBlock = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()), i, qualityFactor);
+					int[][] zigzagedEightxEightBlock = Zigzag.zigzagOperation(quantifiedEightxEightBlock);
+					int[][] unzigzagedEightxEightBlock = Zigzag.unzigzagOperation(zigzagedEightxEightBlock);
+					int[][] unquantifiedEightxEightBlock = DCT.inverseDCTOperation(Quantization.deQuantizationOperation(unzigzagedEightxEightBlock, i, qualityFactor));
+					EightXEightBlock eightXEightBlockResult = new EightXEightBlock(unquantifiedEightxEightBlock);
+					eightXEightBlocksContainer[i][j][k] = eightXEightBlockResult;
+					System.out.println(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()[j][k]);
+				}
+			
+		
+		
+		int[][][] newImageYCbCr = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
+		int[][][] newImageRGB = Convert.extractImageYCbCr(newImageYCbCr);
+		System.out.println("-----------------------");
+		for (int i=0;i<newImageRGB[0].length;i++){
+			for (int j=0;j<newImageRGB[0].length;j++){
+				System.out.println(newImageRGB[0][i][j]);
+				System.out.println(newImageRGB[1][i][j]);
+				System.out.println(newImageRGB[2][i][j]);
+			}
+		}*/
+		//fin test print values
 	}
 }
