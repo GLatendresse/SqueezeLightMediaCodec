@@ -94,9 +94,10 @@ public class Main {
 		      { 1, 88, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 110, 2 }, 
 		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,} } }; 
 		
-		//Image convert (RGB to YCbCr)
-		//imageTest = Convert.extractImage(PPMReaderWriter.readPPMFile(filename));
-		int qualityFactor = 80;
+		//Image convert (RGB to YCbCr) + read file
+		imageRGB = Convert.extractImageRGB(PPMReaderWriter.readPPMFile(args[1]));
+		int qualityFactor = Integer.parseInt(args[0]);
+		
 		int[][][] imageYCbCr = Convert.extractImageRGB(imageRGB);
 		
 		EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageYCbCr);
@@ -105,7 +106,10 @@ public class Main {
 		
 		//int[][] test8x8 = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[0][0][0].getEightXEightBlockMatrix()), Quantization.LUMINANCEQUANTIZATION, 80);
 		//test8x8 = Zigzag.zigzagOperation(test8x8);
-
+		
+		//Save compressed file
+		//writeSZLFile(args[2], (height), (width), qualityFactor);
+		
 		//test
 		System.out.println("-----------------------");
 		for (int i=0; i<3;i++){
