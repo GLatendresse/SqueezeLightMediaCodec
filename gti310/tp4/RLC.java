@@ -2,7 +2,7 @@ package gti310.tp4;
 
 public class RLC {
 
-	public final static int NUMBEROFACCOEFFICIENTS = 63;
+	public final static int BLOCKSIZE = 64;
 	public final static int RUNLENGTH = 0;
 	public final static int VALUE = 1;
 
@@ -24,7 +24,7 @@ public class RLC {
 			}
 		
 		// Premier indice correspond au RUNLENGTH(0) et au VALUE(1)
-		int[][] rLCCoefficients = new int[NUMBEROFACCOEFFICIENTS - zeroCounter][2];
+		int[][] rLCCoefficients = new int[BLOCKSIZE - zeroCounter][2];
 		
 		zeroCounter = 0;
 		int u = 0;
@@ -34,6 +34,13 @@ public class RLC {
 				
 				if(i == 0 && j == 0){
 					
+					
+				}
+				
+				else if (u == rLCCoefficients.length - 1){
+					
+					rLCCoefficients[u][RUNLENGTH] = 0;
+					rLCCoefficients[u][VALUE] = 0;
 					
 				}
 				
@@ -49,6 +56,9 @@ public class RLC {
 				}
 					
 			}
+		
+		
+		
 		
 		return rLCCoefficients;
 	}

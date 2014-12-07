@@ -1,5 +1,7 @@
 package gti310.tp4;
 
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -117,13 +119,12 @@ public class Main {
 			
 			//Image convert (RGB to YCbCr) + read file
 			int[][][] imageYCbCr = Convert.extractImageRGB(PPMReaderWriter.readPPMFile(fileName));
-			int height = imageYCbCr[0].length;
 			
 			//Separate the image in 8x8 pixel blocks and stock them into a container EightXEightBlock[color space][i localisation][j localisation]
 			EightXEightBlock[][][] eightXEightBlocksContainer = EightXEightBlocksMethods.imageToEightXEightBlocks(imageYCbCr);
 			
 			//Image pretraitment
-			for (int i=0; i<3;i++)
+			for (int i=0; i<COLOR_SPACE_SIZE;i++)
 				for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
 					for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
 						int[][] quantifiedEightxEightBlock = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()), i, qualityFactor);
@@ -139,7 +140,7 @@ public class Main {
 				Entropy.writeDC(encodedDCCoefficients[i]);
 			
 			//AC coefficients writer
-			for (int i=0; i<3;i++)
+			for (int i=0; i<COLOR_SPACE_SIZE;i++)
 				for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
 					for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
 						
@@ -151,19 +152,84 @@ public class Main {
 			
 			//Save compressed file
 			SZLReaderWriter.writeSZLFile(savedFileName, imageYCbCr[0].length, imageYCbCr[0][0].length, qualityFactor);
-			System.out.println("done");
+			System.out.println("Encoding done");
 			
 		}else{
+			
 			//SLZ
 			if (extension.equals("slz")){
 				//Ask the user for the decompressed filename
 				JFrame frameFileName = new JFrame();
 				String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the PPM filename:");
-				//Read compressed file
-				SZLReaderWriter.readSZLFile(fileName);
 				
-				//Save PPM file
-				//writePPMFile(savedFileName, imageYCbCr);
+				
+				//Read compressed file
+				int[] sLZHeader = SZLReaderWriter.readSZLFile(fileName);
+				int qualityFactor = sLZHeader[3];
+				int numberOfEightxEightBlocks = ((sLZHeader[0]*sLZHeader[1])/(BLOCK_SIZE*BLOCK_SIZE))*COLOR_SPACE_SIZE;
+				
+				//initialize container with zeros
+				EightXEightBlock[][][] eightXEightBlocksContainer = new EightXEightBlock[COLOR_SPACE_SIZE][sLZHeader[0]/BLOCK_SIZE][sLZHeader[1]/BLOCK_SIZE];
+				int[][] initializer = new int[BLOCK_SIZE][BLOCK_SIZE];
+				
+				for (int i=0; i<BLOCK_SIZE;i++)
+					for (int j =0;j<BLOCK_SIZE;j++)
+						initializer[i][j] = 0;
+						
+				EightXEightBlock eightXEightBlockInitializer = new EightXEightBlock(initializer);
+				
+				for (int i=0; i<COLOR_SPACE_SIZE;i++)
+					for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
+						for (int k=0;k<eightXEightBlocksContainer[0].length;k++)
+							eightXEightBlocksContainer[i][j][k] = eightXEightBlockInitializer;
+							
+						
+				//DC coefficients reader
+				int[] encodedDCCoefficients = new int[numberOfEightxEightBlocks];
+				for(int i = 0; i < encodedDCCoefficients.length; i++)
+					encodedDCCoefficients[i] = Entropy.readDC();
+				DPCM.iDPCMOperation(encodedDCCoefficients, eightXEightBlocksContainer);
+				
+				//AC coefficients reader
+				int[] rLCCoefficient = {1,1};
+				ArrayList<int[]> rLCCoefficients = new ArrayList<int[]>();
+				
+				for (int i=0; i<COLOR_SPACE_SIZE;i++)
+					for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
+						for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
+							
+							while(rLCCoefficient[RLC.RUNLENGTH] != 0 && rLCCoefficient[RLC.VALUE] != 0){
+					
+								rLCCoefficient = Entropy.readAC();
+								rLCCoefficients.add(rLCCoefficient);
+								
+							}
+							
+							int[][] rLCCoefficientsArray = new int[2][rLCCoefficients.size()];
+							for(int u = 0; u < rLCCoefficientsArray.length; u++){
+								
+								rLCCoefficientsArray[u][RLC.RUNLENGTH] = rLCCoefficients.get(u)[RLC.RUNLENGTH];
+								rLCCoefficientsArray[u][RLC.VALUE] = rLCCoefficients.get(u)[RLC.VALUE];
+								
+							}
+								
+							
+							RLC.iRLCOperation(rLCCoefficientsArray, eightXEightBlocksContainer[i][j][k]);
+							
+							//image post traitment
+							int[][] unzigzagedEightxEightBlock = Zigzag.unzigzagOperation(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix());
+							int[][] unquantifiedEightxEightBlock = DCT.inverseDCTOperation(Quantization.deQuantizationOperation(unzigzagedEightxEightBlock, i, qualityFactor));
+							EightXEightBlock eightXEightBlockResult = new EightXEightBlock(unquantifiedEightxEightBlock);
+							eightXEightBlocksContainer[i][j][k] = eightXEightBlockResult;
+							
+							
+						}
+				
+				//Fusion of the 8x8 blocks
+				int[][][] newImageYCbCr = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
+				
+				//Save PPM file and conversion YcbCr -> RGB
+				PPMReaderWriter.writePPMFile(savedFileName, Convert.extractImageYCbCr(newImageYCbCr));
 			
 			}else{
 				JOptionPane.showMessageDialog(null, "Désolé, le format n'est pas supporté.");
@@ -173,7 +239,7 @@ public class Main {
 		
 		//test print values
 		/*System.out.println("-----------------------");
-		for (int i=0; i<3;i++)
+		for (int i=0; i<COLOR_SPACE_SIZE;i++)
 			for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
 				for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
 					int[][] quantifiedEightxEightBlock = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()), i, qualityFactor);
