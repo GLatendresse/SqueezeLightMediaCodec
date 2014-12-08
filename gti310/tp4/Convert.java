@@ -51,9 +51,9 @@ public class Convert {
 	
 	private static int[] YCbCrToRGB(int y, int cb, int cr){
 		int[] rgb = new int[3];
-		int r  = (int)(( 1.0   * ((y * 219)) + 0 * ((cb * 224) + 128)  + 1.402 * ((cr * 224) + 128))/255);
-		int g = (int)((1.0 * ((y * 219)) - 0.33126 * ((cb * 224) + 128) + 0.50000 * ((cr * 224) + 128))/255);
-		int b = (int)(( 1.0 * ((y * 219)) - 0.41869 * ((cb * 224) + 128) - 0.08131 * ((cr * 224) + 128))/255);
+		int r  = (int)(y + (1.402 * (cr-128)));
+		int g = (int)(y - (0.34414 * (cb - 128)) - (0.71414 * (cr -128)));
+		int b = (int)(y + (1.772 * (cb - 128)));
 		rgb[0] = r;
 		rgb[1] = g;
 		rgb[2] = b; 	

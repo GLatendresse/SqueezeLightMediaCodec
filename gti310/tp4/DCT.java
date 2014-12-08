@@ -24,7 +24,7 @@ public class DCT {
 				for(int i = 0 ; i < rawEightXEightBloc.length; i++)
 					for(int j = 0 ; j < rawEightXEightBloc.length; j++){
 						
-						summationValue = summationValue + rawEightXEightBloc[i][j]*Math.cos((2*i+1)*u*Math.PI/16)*Math.cos((2*j+1)*v*Math.PI/16);
+						summationValue = summationValue + rawEightXEightBloc[i][j]*Math.cos(((2*i)+1)*u*Math.PI/16)*Math.cos(((2*j)+1)*v*Math.PI/16);
 						
 					}
 				

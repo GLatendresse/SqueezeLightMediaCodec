@@ -194,12 +194,13 @@ public class Main {
 				DPCM.iDPCMOperation(encodedDCCoefficients, eightXEightBlocksContainer);
 				
 				//AC coefficients reader
-				int[] rLCCoefficient = {1,1};
 				ArrayList<int[]> rLCCoefficients = new ArrayList<int[]>();
 				
+				int[] rLCCoefficient = {1,1};
 				for (int i=0; i<COLOR_SPACE_SIZE;i++)
 					for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
 						for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
+							
 							
 							while(rLCCoefficient[RLC.RUNLENGTH] != 0 && rLCCoefficient[RLC.VALUE] != 0){
 					
@@ -208,7 +209,7 @@ public class Main {
 								
 							}
 							
-							int[][] rLCCoefficientsArray = new int[2][rLCCoefficients.size()];
+							int[][] rLCCoefficientsArray = new int[rLCCoefficients.size()][2];
 							for(int u = 0; u < rLCCoefficientsArray.length; u++){
 								
 								rLCCoefficientsArray[u][RLC.RUNLENGTH] = rLCCoefficients.get(u)[RLC.RUNLENGTH];
@@ -242,32 +243,7 @@ public class Main {
 			}
 		}
 		
-		//test print values
-		/*System.out.println("-----------------------");
-		for (int i=0; i<COLOR_SPACE_SIZE;i++)
-			for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
-				for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
-					int[][] quantifiedEightxEightBlock = Quantization.quantizationOperation(DCT.dCTOperation(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()), i, qualityFactor);
-					int[][] zigzagedEightxEightBlock = Zigzag.zigzagOperation(quantifiedEightxEightBlock);
-					int[][] unzigzagedEightxEightBlock = Zigzag.unzigzagOperation(zigzagedEightxEightBlock);
-					int[][] unquantifiedEightxEightBlock = DCT.inverseDCTOperation(Quantization.deQuantizationOperation(unzigzagedEightxEightBlock, i, qualityFactor));
-					EightXEightBlock eightXEightBlockResult = new EightXEightBlock(unquantifiedEightxEightBlock);
-					eightXEightBlocksContainer[i][j][k] = eightXEightBlockResult;
-					System.out.println(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix()[j][k]);
-				}
-			
 		
-		
-		int[][][] newImageYCbCr = EightXEightBlocksMethods.eightXEightBlocksToImage(eightXEightBlocksContainer);
-		int[][][] newImageRGB = Convert.extractImageYCbCr(newImageYCbCr);
-		System.out.println("-----------------------");
-		for (int i=0;i<newImageRGB[0].length;i++){
-			for (int j=0;j<newImageRGB[0].length;j++){
-				System.out.println(newImageRGB[0][i][j]);
-				System.out.println(newImageRGB[1][i][j]);
-				System.out.println(newImageRGB[2][i][j]);
-			}
-		}*/
-		//fin test print values
 	}
+	
 }
