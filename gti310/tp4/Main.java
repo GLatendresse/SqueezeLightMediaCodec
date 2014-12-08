@@ -170,18 +170,21 @@ public class Main {
 				
 				//initialize container with zeros
 				EightXEightBlock[][][] eightXEightBlocksContainer = new EightXEightBlock[COLOR_SPACE_SIZE][sLZHeader[0]/BLOCK_SIZE][sLZHeader[1]/BLOCK_SIZE];
-				int[][] initializer = new int[BLOCK_SIZE][BLOCK_SIZE];
-				
-				for (int i=0; i<BLOCK_SIZE;i++)
-					for (int j =0;j<BLOCK_SIZE;j++)
-						initializer[i][j] = 0;
-						
-				EightXEightBlock eightXEightBlockInitializer = new EightXEightBlock(initializer);
 				
 				for (int i=0; i<COLOR_SPACE_SIZE;i++)
 					for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
-						for (int k=0;k<eightXEightBlocksContainer[0].length;k++)
-							eightXEightBlocksContainer[i][j][k] = eightXEightBlockInitializer;
+						for (int k=0;k<eightXEightBlocksContainer[0].length;k++){
+							
+							int[][] initializer = new int[BLOCK_SIZE][BLOCK_SIZE];
+							
+							for (int u=0; u<BLOCK_SIZE;u++)
+								for (int v =0;v<BLOCK_SIZE;v++)
+									initializer[u][v] = 0;
+							
+							eightXEightBlocksContainer[i][j][k] = new EightXEightBlock(initializer);
+							
+						}
+							
 							
 						
 				//DC coefficients reader
@@ -217,7 +220,8 @@ public class Main {
 							RLC.iRLCOperation(rLCCoefficientsArray, eightXEightBlocksContainer[i][j][k]);
 							
 							//image post traitment
-							int[][] unzigzagedEightxEightBlock = Zigzag.unzigzagOperation(eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix());
+							int[][] zigzagedEightxEightBlock = eightXEightBlocksContainer[i][j][k].getEightXEightBlockMatrix();
+							int[][] unzigzagedEightxEightBlock = Zigzag.unzigzagOperation(zigzagedEightxEightBlock);
 							int[][] unquantifiedEightxEightBlock = DCT.inverseDCTOperation(Quantization.deQuantizationOperation(unzigzagedEightxEightBlock, i, qualityFactor));
 							EightXEightBlock eightXEightBlockResult = new EightXEightBlock(unquantifiedEightxEightBlock);
 							eightXEightBlocksContainer[i][j][k] = eightXEightBlockResult;
@@ -230,6 +234,7 @@ public class Main {
 				
 				//Save PPM file and conversion YcbCr -> RGB
 				PPMReaderWriter.writePPMFile(savedFileName, Convert.extractImageYCbCr(newImageYCbCr));
+				System.out.println("Decoding done");
 			
 			}else{
 				JOptionPane.showMessageDialog(null, "Désolé, le format n'est pas supporté.");
