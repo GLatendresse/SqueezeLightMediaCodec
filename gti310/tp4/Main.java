@@ -61,8 +61,7 @@ public class Main {
 			JFrame frameQuality = new JFrame();
 			int qualityFactor = Integer.parseInt(JOptionPane.showInputDialog(frameQuality, "Enter the quality factor:"));
 			JFrame frameFileName = new JFrame();
-			String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the SZL filename:");
-			
+			String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the SZL filename (without the extension):") + ".szl";
 			
 			//Image convert (RGB to YCbCr) + read file
 			int[][][] imageYCbCr = Convert.extractImageRGB(PPMReaderWriter.readPPMFile(fileName));
@@ -107,7 +106,7 @@ public class Main {
 			if (extension.equals("szl")){
 				//Ask the user for the decompressed filename
 				JFrame frameFileName = new JFrame();
-				String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the PPM filename:");
+				String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the PPM filename (without the extension):") + ".ppm";
 				
 				
 				//Read compressed file
