@@ -1,5 +1,7 @@
 package gti310.tp4;
 
+
+//Classe contenant une matrice 8x8
 public class EightXEightBlock {
 	
 	private int[][] eightXEightBlockMatrix;

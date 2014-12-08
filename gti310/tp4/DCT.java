@@ -2,6 +2,7 @@ package gti310.tp4;
 
 public class DCT {
 	
+	//DCT
 	public static int[][] dCTOperation(int[][] rawEightXEightBloc){
 		
 		double cu, cv, summationValue;
@@ -21,6 +22,7 @@ public class DCT {
 				if(v == 0)
 					cv = 1/(Math.sqrt(2));
 				
+				//Formule de la sommation
 				for(int i = 0 ; i < rawEightXEightBloc.length; i++)
 					for(int j = 0 ; j < rawEightXEightBloc.length; j++){
 						
@@ -35,6 +37,7 @@ public class DCT {
 		
 	}
 	
+	//DCT inverse
 	public static int[][] inverseDCTOperation(int[][] dCTEightXEightBloc){
 		
 		double cu, cv, summationValue;
@@ -46,6 +49,7 @@ public class DCT {
 				
 				summationValue = 0;
 				
+				//Formule de la sommation
 				for(int u = 0 ; u < EightXEightBloc.length; u++)
 					for(int v = 0 ; v < EightXEightBloc.length; v++){
 						

@@ -30,7 +30,7 @@ public class Quantization {
 	final static int CHROMINANCEQUANTIZATION = 1;
 	
 	
-	
+	//Quantification
 	public static int[][] quantizationOperation(int[][] rawEightXEightBloc, int quantizationType, int qualityValue){
 		
 		int[][] quantifiedEightXEightBloc = new int[8][8];
@@ -52,6 +52,7 @@ public class Quantization {
 		
 		else{
 			
+			//Formule de la quantification
 			if(qualityValue >= MINQUALITYVALUE && qualityValue <= MIDQUALITYVALUE )
 				alpha = 50D/(double)qualityValue;
 			
@@ -73,6 +74,7 @@ public class Quantization {
 		
 	}
 	
+	//Dequantification
 	public static int[][] deQuantizationOperation(int[][] quantifiedEightXEightBloc, int quantizationType, int qualityValue){
 		
 		int[][] dequantifiedEightXEightBloc = new int[8][8];
@@ -92,6 +94,7 @@ public class Quantization {
 		if(qualityValue >= MAXQUALITYVALUE)
 			dequantifiedEightXEightBloc = quantifiedEightXEightBloc;
 		
+		//Formule de la déquantification
 		else{
 			
 			if(qualityValue >= MINQUALITYVALUE && qualityValue <= MIDQUALITYVALUE )

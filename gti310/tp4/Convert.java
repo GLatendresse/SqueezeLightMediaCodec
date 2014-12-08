@@ -2,6 +2,7 @@ package gti310.tp4;
 
 public class Convert {
 	
+	//Conversion de chaque pixel RGB à YCbCr
 	public static int[][][] extractImageRGB(int[][][] image){
 		int r, g, b;
 		int[] ycbcr;
@@ -20,6 +21,7 @@ public class Convert {
 		return imageYCbCr;
 	}
 	
+	//Formule de conversion
 	private static int[] RGBToYCbCr(int r, int g, int b){
 		int[] ycbcr= new int[3];
 		int y  = (int)((( 0.299   * r) + (0.587 * g) + (0.114 * b)));
@@ -31,6 +33,7 @@ public class Convert {
 		return ycbcr;
 	}
 	
+	//Conversion de chaque pixel YCbCr à RGB
 	public static int[][][] extractImageYCbCr(int[][][] image){
 		int y, cb, cr;
 		int[] rgb;
@@ -49,6 +52,7 @@ public class Convert {
 		return imageRGB;
 	}
 	
+	//Formule de conversion
 	private static int[] YCbCrToRGB(int y, int cb, int cr){
 		int[] rgb = new int[3];
 		int r  = (int)(y + (1.402 * (cr-128)));

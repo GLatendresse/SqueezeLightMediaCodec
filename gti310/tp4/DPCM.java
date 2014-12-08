@@ -2,6 +2,7 @@ package gti310.tp4;
 
 public class DPCM {
 	
+	//DPCM
 	public static int[] dPCMOperation(EightXEightBlock[][][] eightXEightBlocksContainer){
 		
 		
@@ -25,6 +26,7 @@ public class DPCM {
 	
 	}
 	
+	//DPCM inverse
 	public static void iDPCMOperation(int[] encodedDCCoefficients, EightXEightBlock[][][] eightXEightBlocksContainer){
 		
 		int u = 0;

@@ -47,59 +47,6 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Squeeze Light Media Codec !");
 		
-		int[][][] imageRGB = { { 
-			  { 234, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 34, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 98, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,}, 
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 150, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,}},
-			  
-			{ { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 78, 4,},
-			  { 1, 236, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-			  { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,}, 
-			  { 10, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 144 }, 
-			  { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,}},
-
-			{ { 255, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0 }, 
-		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-		      { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-		      { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-		      { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-		      { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-		      { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,},
-		      { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 }, 
-		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,}, 
-		      { 1, 88, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 110, 2 }, 
-		      { 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4,} } }; 
-		
-		
 		//PPM or SLZ or extension not supported? 
 		String extension = "";
 		String fileName = args[0];
@@ -114,7 +61,7 @@ public class Main {
 			JFrame frameQuality = new JFrame();
 			int qualityFactor = Integer.parseInt(JOptionPane.showInputDialog(frameQuality, "Enter the quality factor:"));
 			JFrame frameFileName = new JFrame();
-			String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the SLZ filename:");
+			String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the SZL filename:");
 			
 			
 			//Image convert (RGB to YCbCr) + read file
@@ -157,19 +104,19 @@ public class Main {
 		}else{
 			
 			//SLZ
-			if (extension.equals("slz")){
+			if (extension.equals("szl")){
 				//Ask the user for the decompressed filename
 				JFrame frameFileName = new JFrame();
 				String savedFileName = JOptionPane.showInputDialog(frameFileName, "Enter the PPM filename:");
 				
 				
 				//Read compressed file
-				int[] sLZHeader = SZLReaderWriter.readSZLFile(fileName);
-				int qualityFactor = sLZHeader[3];
-				int numberOfEightxEightBlocks = ((sLZHeader[0]*sLZHeader[1])/(BLOCK_SIZE*BLOCK_SIZE))*COLOR_SPACE_SIZE;
+				int[] sZLHeader = SZLReaderWriter.readSZLFile(fileName);
+				int qualityFactor = sZLHeader[3];
+				int numberOfEightxEightBlocks = ((sZLHeader[0]*sZLHeader[1])/(BLOCK_SIZE*BLOCK_SIZE))*COLOR_SPACE_SIZE;
 				
 				//initialize container with zeros
-				EightXEightBlock[][][] eightXEightBlocksContainer = new EightXEightBlock[COLOR_SPACE_SIZE][sLZHeader[0]/BLOCK_SIZE][sLZHeader[1]/BLOCK_SIZE];
+				EightXEightBlock[][][] eightXEightBlocksContainer = new EightXEightBlock[COLOR_SPACE_SIZE][sZLHeader[0]/BLOCK_SIZE][sZLHeader[1]/BLOCK_SIZE];
 				
 				for (int i=0; i<COLOR_SPACE_SIZE;i++)
 					for (int j =0;j<eightXEightBlocksContainer[0].length;j++)
@@ -203,9 +150,10 @@ public class Main {
 							
 							
 							while(rLCCoefficient[RLC.RUNLENGTH] != 0 && rLCCoefficient[RLC.VALUE] != 0){
-					
+								
 								rLCCoefficient = Entropy.readAC();
 								rLCCoefficients.add(rLCCoefficient);
+								
 								
 							}
 							
@@ -216,7 +164,8 @@ public class Main {
 								rLCCoefficientsArray[u][RLC.VALUE] = rLCCoefficients.get(u)[RLC.VALUE];
 								
 							}
-								
+							
+							
 							
 							RLC.iRLCOperation(rLCCoefficientsArray, eightXEightBlocksContainer[i][j][k]);
 							
@@ -237,6 +186,7 @@ public class Main {
 				PPMReaderWriter.writePPMFile(savedFileName, Convert.extractImageYCbCr(newImageYCbCr));
 				System.out.println("Decoding done");
 			
+			//Error message
 			}else{
 				JOptionPane.showMessageDialog(null, "Désolé, le format n'est pas supporté.");
 				System.exit(0);

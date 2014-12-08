@@ -2,7 +2,7 @@ package gti310.tp4;
 
 public class Zigzag {
 	
-	
+	//Zigzag
 	public static int[][] zigzagOperation(int[][] rawEightXEightBloc){
 		
 		int[][] zigzagedEightXEightBloc = new int[8][8];
@@ -130,7 +130,7 @@ public class Zigzag {
 		
 	}
 	
-	
+	//Defait le zigzag
 	public static int[][] unzigzagOperation(int[][] zigzagedEightXEightBloc){
 		
 		int[][] unzigzagedEightXEightBloc = new int[8][8];

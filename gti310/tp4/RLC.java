@@ -5,7 +5,8 @@ public class RLC {
 	public final static int BLOCKSIZE = 64;
 	public final static int RUNLENGTH = 0;
 	public final static int VALUE = 1;
-
+	
+	//RLC
 	public static int[][] rLCOperation(int[][] rawEightXEightBloc) {
 
 		int zeroCounter = 0;
@@ -63,6 +64,7 @@ public class RLC {
 		return rLCCoefficients;
 	}
 	
+	//RLC inverse
 	public static void iRLCOperation(int[][] rLCCoefficients, EightXEightBlock eightXEightBlock){
 		
 		int u = 0;
